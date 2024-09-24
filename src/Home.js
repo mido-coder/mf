@@ -1,35 +1,34 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 
 export default function App() {
-  const sections = [
-    { title: 'Labo', distance: '5 km' },
-    { title: 'Clinic', distance: '3 km' },
-    { title: 'Pharmacy', distance: '7 km' },
-    { title: 'Labo', distance: '10 km' },
-    { title: 'Hospital', distance: '2 km' },
-    { title: 'Doctor Office', distance: '8 km' },
-    { title: 'Labo', distance: '12 km' },
-    { title: 'Unknown Location', distance: '' },
+  const labs = [
+    { name: 'Labo 1', distance: '5 km', description: 'Comprehensive blood test lab' },
+    { name: 'Clinic 2', distance: '3 km', description: 'Specialized in rapid diagnostics' },
+    { name: 'Pharmacy 3', distance: '7 km', description: 'Basic health tests available' },
+    { name: 'Labo 4', distance: '10 km', description: 'Advanced genetic analysis' },
+    { name: 'Hospital 5', distance: '2 km', description: 'Full hospital-based diagnostics' },
+    { name: 'Doctor Office 6', distance: '8 km', description: 'Private consultations and tests' },
+    { name: 'Labo 7', distance: '12 km', description: 'State-of-the-art medical technology' },
+    { name: 'Unknown Location', distance: '', description: 'Unavailable at the moment' },
   ];
 
-  const orders = new Array(8).fill('Order');
+  const handleApply = (labName) => {
+    Alert.alert('Application Submitted', `You have applied for a test at ${labName}.`);
+  };
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        {sections.map((section, index) => (
-          <View key={index} style={styles.section}>
-            <Text style={styles.title}>{section.title}</Text>
-            {section.distance && (
-              <Text style={styles.distance}>{section.distance}</Text>
-            )}
+        {labs.map((lab, index) => (
+          <View key={index} style={styles.labContainer}>
+            <Text style={styles.labName}>{lab.name}</Text>
+            <Text style={styles.distance}>{lab.distance ? lab.distance : 'Distance not available'}</Text>
+            <Text style={styles.description}>{lab.description}</Text>
+            <TouchableOpacity style={styles.applyButton} onPress={() => handleApply(lab.name)}>
+              <Text style={styles.applyButtonText}>Apply</Text>
+            </TouchableOpacity>
           </View>
-        ))}
-        {orders.map((order, index) => (
-          <Text key={index} style={styles.order}>
-            {order} #{index + 1}
-          </Text>
         ))}
       </ScrollView>
     </View>
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#f9f9f9',
   },
-  section: {
+  labContainer: {
     marginVertical: 10,
     padding: 15,
     backgroundColor: '#fff',
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  title: {
+  labName: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
@@ -66,12 +65,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#888',
   },
-  order: {
-    fontSize: 16,
-    marginVertical: 10,
+  description: {
+    marginTop: 5,
+    fontSize: 14,
+    color: '#666',
+  },
+  applyButton: {
+    marginTop: 10,
+    backgroundColor: '#4CAF50',
     padding: 10,
-    backgroundColor: '#e0e0e0',
     borderRadius: 5,
-    textAlign: 'center',
+    alignItems: 'center',
+  },
+  applyButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
